@@ -255,10 +255,9 @@ def clean_up(workflow, conf):
     d_pattern = map(lambda x: os.path.join(conf.target_dir, x), os.listdir(conf.target_dir))
 
     attach_back(workflow, ShellCommand(
-        "if [ ! -d '{output}' ]; then mkdir -p {output}; mkdir -p {latex};fi",
-        output=os.path.join(conf.target_dir, "attic"),
-        latex=os.path.join(conf.target_dir,"latex")))
-
+        "if [ ! -d '{output}' ]; then mkdir -p {output}; mkdir -p %s;fi" % os.path.join(conf.target_dir,"latex"),
+        output=os.path.join(conf.target_dir, "attic")))
+    
     for df in d_pattern:
         if not df in preserved:
             deleted = attach_back(workflow,
